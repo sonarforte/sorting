@@ -34,7 +34,6 @@ int main(int argc, char **argv) {
 */    struct timeval elap = elapsed_time(tstrt, tend);  
    
     print_lst(lst, n);
-    self_check(lst, n);
     printf("Time to sort: %ld s, %d ms\n", elap.tv_sec, (int)(elap.tv_usec / 1000)); 
     return 0;
 
