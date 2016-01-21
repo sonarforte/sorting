@@ -18,11 +18,12 @@ int main(int argc, char **argv) {
     print_lst(lst, n);
 
     gettimeofday(&tstrt, NULL); 
-//    usleep(900000); 
-//    selection_sort(lst,n);
-//    merge_sort(lst, n);
+    
+    // Sorting algorithms....uncomment only ONE algorithm to use at a time 
+    /*selection_sort(lst,n);*/
+    /*merge_sort(lst, n);*/
     radix_sort(lst, n);
-    //  float_radix_sort(lst,tmp,n);
+
     gettimeofday(&tend, NULL); 
 
     // Print completion time in s and ms
@@ -31,11 +32,12 @@ int main(int argc, char **argv) {
     printf("end time: %ld s, %d ms\n", tend.tv_sec, 
         (int)(tend.tv_usec / 1000));
 */    struct timeval elap = elapsed_time(tstrt, tend);  
-    printf("Time to sort: %ld s, %d ms\n", elap.tv_sec, 
-        (int)(elap.tv_usec / 1000)); 
-    
+   
     print_lst(lst, n);
     self_check(lst, n);
+    printf("Time to sort: %ld s, %d ms\n", elap.tv_sec, (int)(elap.tv_usec / 1000)); 
     return 0;
+
+
 }
 

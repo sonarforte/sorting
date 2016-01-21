@@ -84,8 +84,6 @@ void merge(int *left, long llen, int *right, long rlen, int *sorted) {
 }
 
 
-//fix the bucket size to 256. run 4 passes where each pass processes 8 bits
-//use lst and tmp only. do not use any more memory of size n.
 void radix_sort(int *list, long n) {
     printf("Radix sort:\n");
 
@@ -97,14 +95,12 @@ void radix_sort(int *list, long n) {
             max = list[i]; 
         }
     }
-    printf("foo\n"); 
     // Find the number of digits (rounds) to sort 
     int num = max;
     while (num >= 1) {
         num /= 10;
         digits++;
     }
-    printf("going to declare arrayss\n"); 
     
     // Declare an array of pointers, each pointing to a digit's bucket
     int **bucket;
@@ -112,42 +108,48 @@ void radix_sort(int *list, long n) {
         printf("error assigning bucket"); 
     }    
     
-    printf("foo\n"); 
     int j; 
     for (j = 0; j < base; j++) {
         if ((bucket[j] = malloc(n*sizeof(int))) == NULL) {
             printf("error assigning arrays");
         }
     }
-    printf("test: %d\n", bucket[3][0]); 
-    printf("foo\n"); 
     int msd, buck_ind;    // most significant digit(s)
-    printf("base: %d\n", base); 
     int blen[base]; 
     memset(blen, 0, sizeof(int) * base); 
+    int bukEntryCount[base]; 
     for (j = 0; j < digits; j++) {
-        // Could implement bit-wisee 
         int place = (int)pow(10, j);
         for (i = 0; i < n; i++) {
             // Isolate correct digit            
-            int digit = (list[i]/place)%10;
-            printf("digit: %d\n", digit);
+            int number = list[i]; 
+            int digit = (number/place)%10;
             buck_ind = blen[digit];
-            printf("digit: %d, buck_ind: %d\n", digit, buck_ind);
-            bucket[digit][buck_ind] = list[i];
-            blen[digit]++;
+            // Append number to bucket 
+            bucket[digit][buck_ind] = number;
+            blen[digit]++;      // increment bucket index counter
         
         }
+        
         int ind = 0; 
         for (i = 0; i < base; i++) {
             int k;
             for (k = 0; k < blen[i]; k++) {
-                list[ind] = bucket[i][k];
-                ind++;
+                if ( bucket[i][k] != 0 ) {
+                    /*printf("bucket ik = %d\n", bucket[i][k]); */
+                    list[ind] = bucket[i][k];
+                    ind++;
+                
+  
+                }    
             }
 
         }
+         
+        // Clear bucket index counters 
+        memset(blen, 0, sizeof(int) * base); 
     }
+    
     return;
 }
 
